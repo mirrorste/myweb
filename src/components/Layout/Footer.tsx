@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
           <h3 className="font-mono font-bold text-lg mb-4 text-gh-text">
-            {"<DevBlog/>"}
+            {"<STEMirror/>"}
           </h3>
           <p className="text-gh-text-muted text-sm leading-relaxed">
             分享技术心得，记录成长之路。

@@ -52,7 +52,7 @@ export default function Header() {
             <Code2 className="w-5 h-5 text-gh-green" />
           </div>
           <span className="font-mono font-bold text-lg text-gh-text">
-            {"<DevBlog/>"}
+            {"<STEMirror/>"}
           </span>
         </Link>
 

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STEMirror - 技术博客</title>
+    <script>
+      (function() {
+        var path = window.location.pathname;
+        var hash = window.location.hash;
+        var base = '/myweb/';
+        if (!hash) {
+          var relativePath = path.replace(base, '');
+          window.location.replace(base + '#/' + relativePath);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <p>正在跳转...</p>
+  </body>
+</html>
