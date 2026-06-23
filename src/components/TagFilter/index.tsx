@@ -24,6 +24,13 @@ const tagColors: Record<string, string> = {
   GraphQL: "bg-pink-600/10 text-pink-500 border-pink-600/30 hover:bg-pink-600/20",
   "API设计": "bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30 hover:bg-fuchsia-500/20",
   "后端架构": "bg-teal-500/10 text-teal-400 border-teal-500/30 hover:bg-teal-500/20",
+  Linux: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30 hover:bg-yellow-500/20",
+  "C语言": "bg-sky-500/10 text-sky-400 border-sky-500/30 hover:bg-sky-500/20",
+  内核: "bg-amber-600/10 text-amber-500 border-amber-600/30 hover:bg-amber-600/20",
+  操作系统: "bg-lime-500/10 text-lime-400 border-lime-500/30 hover:bg-lime-500/20",
+  指针: "bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20",
+  "内存管理": "bg-rose-600/10 text-rose-500 border-rose-600/30 hover:bg-rose-600/20",
+  运维: "bg-stone-500/10 text-stone-400 border-stone-500/30 hover:bg-stone-500/20",
 };
 
 export default function TagFilter({ tags, activeTag, onTagClick }: TagFilterProps) {

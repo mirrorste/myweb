@@ -4,10 +4,13 @@ import { Terminal, ChevronRight } from "lucide-react";
 import { profile } from "@/data/profile";
 
 const terminalLines = [
-  { prompt: "$ whoami", output: profile.name },
-  { prompt: "$ role", output: profile.title },
-  { prompt: "$ location", output: "Earth 🌍" },
-  { prompt: "$ status", output: "Available for hire ✨" },
+  { prompt: "$ whoami", output: "STEMirror" },
+  { prompt: "$ cat /etc/os-release", output: "Linux 6.1.0-amd64 x86_64" },
+  { prompt: "$ gcc --version", output: "gcc (GCC) 12.2.0" },
+  { prompt: "$ node --version", output: "v20.10.0" },
+  { prompt: "$ echo $ROLE", output: "全栈开发工程师 & 系统编程爱好者" },
+  { prompt: "$ ls ~/projects/", output: "web-apps  kernel-hacks  tools  ..." },
+  { prompt: "$ status", output: "Coding with passion ✨" },
 ];
 
 export default function TerminalHero() {
