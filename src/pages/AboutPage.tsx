@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { profile } from "@/data/profile";
 
-const skillCategories = ["前端", "后端", "数据库", "DevOps"];
+const skillCategories = ["前端", "后端", "系统编程", "数据库", "DevOps"];
 
 export default function AboutPage() {
   return (
