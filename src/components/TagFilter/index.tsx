@@ -7,6 +7,13 @@ interface TagFilterProps {
 }
 
 const tagColors: Record<string, string> = {
+  "汇聚分流": "bg-orange-500/10 text-orange-400 border-orange-500/30 hover:bg-orange-500/20",
+  "网络通信": "bg-cyan-500/10 text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/20",
+  "数据包处理": "bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20",
+  "TCP/IP": "bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20",
+  "网络协议": "bg-sky-500/10 text-sky-400 border-sky-500/30 hover:bg-sky-500/20",
+  "协议栈": "bg-blue-600/10 text-blue-500 border-blue-600/30 hover:bg-blue-600/20",
+  DPDK: "bg-purple-500/10 text-purple-400 border-purple-500/30 hover:bg-purple-500/20",
   React: "bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20",
   TypeScript: "bg-blue-600/10 text-blue-500 border-blue-600/30 hover:bg-blue-600/20",
   "前端架构": "bg-purple-500/10 text-purple-400 border-purple-500/30 hover:bg-purple-500/20",

@@ -2,10 +2,10 @@ import type { Profile } from "@/types";
 
 export const profile: Profile = {
   name: "STEMirror",
-  title: "全栈开发工程师 & 系统编程爱好者",
+  title: "通信设备软件开发工程师 & 系统编程爱好者",
   avatar:
     "https://api.dicebear.com/7.x/avataaars/svg?seed=STEMirror&backgroundColor=0d1117",
-  bio: "热爱技术的全栈开发者，穿梭于 Web 应用与系统编程之间。从前端交互到底层内核，都有我的探索足迹。喜欢研究 Linux 内核、编译器原理和高性能架构，也享受用 React 打造精致的用户界面。代码是诗，系统是画。",
+  bio: "通信设备软件开发工程师，专注于网络通信与系统编程。从底层驱动到上层应用，在通信设备、网络协议、汇聚分流领域深耕多年。热爱 C 语言与 Linux 内核，也享受用技术解决实际问题的过程。代码即武器，网络即战场。",
   social: {
     github: "https://github.com",
     twitter: "https://twitter.com",
@@ -13,41 +13,40 @@ export const profile: Profile = {
     linkedin: "https://linkedin.com",
   },
   skills: [
-    { name: "React", level: 95, category: "前端" },
-    { name: "TypeScript", level: 90, category: "前端" },
-    { name: "Vue.js", level: 85, category: "前端" },
-    { name: "Next.js", level: 88, category: "前端" },
-    { name: "Node.js", level: 85, category: "后端" },
-    { name: "Go", level: 75, category: "后端" },
-    { name: "PostgreSQL", level: 80, category: "数据库" },
-    { name: "Redis", level: 75, category: "数据库" },
-    { name: "C 语言", level: 88, category: "系统编程" },
+    { name: "C 语言", level: 95, category: "网络通信" },
+    { name: "网络协议", level: 92, category: "网络通信" },
+    { name: "TCP/IP", level: 90, category: "网络通信" },
     { name: "Linux", level: 90, category: "系统编程" },
-    { name: "操作系统", level: 80, category: "系统编程" },
-    { name: "Docker", level: 82, category: "DevOps" },
-    { name: "Kubernetes", level: 70, category: "DevOps" },
+    { name: "操作系统", level: 82, category: "系统编程" },
+    { name: "数据结构与算法", level: 88, category: "系统编程" },
+    { name: "React", level: 85, category: "前端" },
+    { name: "TypeScript", level: 80, category: "前端" },
+    { name: "Go", level: 78, category: "后端" },
+    { name: "Python", level: 75, category: "后端" },
+    { name: "Docker", level: 72, category: "DevOps" },
+    { name: "Git", level: 85, category: "DevOps" },
   ],
   experiences: [
     {
-      company: "某科技公司",
-      position: "高级全栈工程师",
-      period: "2022 - 至今",
+      company: "某通信设备公司",
+      position: "高级软件开发工程师",
+      period: "2021 - 至今",
       description:
-        "负责公司核心产品的前后端架构设计与开发，主导技术选型和代码规范制定。同时参与底层基础设施优化，用 C 语言实现高性能网络库，显著提升系统吞吐量。",
+        "负责通信设备核心软件的开发与优化，深耕汇聚分流设备、网络协议栈、高性能数据包处理领域。主导多个关键项目的架构设计与性能优化，显著提升设备吞吐量与稳定性。",
     },
     {
-      company: "某互联网公司",
-      position: "全栈开发工程师",
-      period: "2020 - 2022",
+      company: "某网络科技公司",
+      position: "网络软件开发工程师",
+      period: "2019 - 2021",
       description:
-        "参与多个 B 端和 C 端产品的全栈开发，负责微服务架构设计和 Linux 服务器运维。用 Go 重构核心服务，性能提升 300%。",
+        "参与网络安全产品开发，负责协议解析引擎和流量分析模块的设计与实现。深入研究 TCP/IP 协议栈，优化数据包处理性能，支撑万兆线速转发。",
     },
     {
       company: "某创业公司",
-      position: "前端开发工程师",
-      period: "2018 - 2020",
+      position: "嵌入式开发工程师",
+      period: "2017 - 2019",
       description:
-        "负责公司官网和管理后台的前端开发，参与产品迭代和技术优化。业余时间研究 Linux 内核和系统编程，开启了底层技术探索之路。",
+        "负责嵌入式网络设备的软件开发，涉及驱动开发、协议栈移植和应用层功能实现。在资源受限环境下实现高效的网络通信功能，积累了丰富的底层开发经验。",
     },
   ],
 };

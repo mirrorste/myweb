@@ -2,6 +2,520 @@ import type { Post } from "@/types";
 
 export const posts: Post[] = [
   {
+    slug: "network-aggregation-diversion-deep-dive",
+    title: "汇聚分流设备核心技术深度解析",
+    description:
+      "深入探讨通信网络中汇聚分流设备的工作原理、关键技术与实现方案，从硬件架构到软件设计，全面剖析高性能数据包处理的奥秘。",
+    date: "2026-05-15",
+    readTime: 25,
+    tags: ["汇聚分流", "网络通信", "数据包处理"],
+    category: "网络通信",
+    content: `## 什么是汇聚分流设备
+
+在现代通信网络中，汇聚分流设备（Aggregation & Diversion Device）扮演着至关重要的角色。它处于网络的关键节点，负责将海量网络流量进行汇聚、识别和分发。
+
+## 核心功能
+
+### 流量汇聚
+
+将多条链路的流量汇聚到一起进行统一处理：
+
+\`\`\`
+                      ┌─────────────┐
+  链路1 ─────────────▶             │
+  链路2 ─────────────▶  汇聚分流设备  ├─────▶ 分析/处理
+  链路3 ─────────────▶             │
+  ...                └─────────────┘
+\`\`\`
+
+### 流量分流
+
+根据五元组（源IP、目的IP、源端口、目的端口、协议）或应用特征将流量分发到不同的处理通道。
+
+## 硬件架构
+
+### 多核处理器架构
+
+现代汇聚分流设备通常采用多核网络处理器（NP）或多核CPU + 智能网卡的架构：
+
+| 组件 | 作用 |
+|------|------|
+| 物理接口 | 10G/40G/100G 以太网接口 |
+| 包处理引擎 | 高速数据包解析与转发 |
+| TCAM | 快速路由查找与匹配 |
+| DDR4 | 大容量流表存储 |
+
+### DPDK 加速
+
+使用 DPDK（Data Plane Development Kit）绕过内核协议栈，实现用户态高性能数据包处理：
+
+\`\`\`c
+// DPDK 收包处理循环
+while (1) {
+    struct rte_mbuf *bufs[BURST_SIZE];
+    const uint16_t nb_rx = rte_eth_rx_burst(port, 0, bufs, BURST_SIZE);
+    
+    if (unlikely(nb_rx == 0))
+        continue;
+    
+    // 处理数据包
+    for (int i = 0; i < nb_rx; i++) {
+        process_packet(bufs[i]);
+    }
+    
+    // 发送
+    rte_eth_tx_burst(out_port, 0, bufs, nb_rx);
+}
+\`\`\`
+
+## 关键技术
+
+### 1. 五元组匹配
+
+基于哈希表的快速流表查找，支持百万级并发流：
+
+\`\`\`c
+struct flow_key {
+    uint32_t src_ip;
+    uint32_t dst_ip;
+    uint16_t src_port;
+    uint16_t dst_port;
+    uint8_t  protocol;
+};
+
+// 流表查找
+struct flow_entry *flow_lookup(struct flow_key *key) {
+    uint32_t hash = jhash(key, sizeof(*key), 0);
+    return flow_table[hash % FLOW_TABLE_SIZE];
+}
+\`\`\`
+
+### 2. 负载均衡
+
+基于对称哈希（Symmetric Hash）确保同一条流的双向数据包进入同一处理核，避免乱序问题。
+
+### 3. 零拷贝技术
+
+通过内存池和指针传递，避免数据包在处理过程中的内存拷贝，大幅提升性能。
+
+## 性能指标
+
+| 指标 | 说明 | 典型值 |
+|------|------|--------|
+| 吞吐量 | 设备处理能力 | 100Gbps+ |
+| 包转发率 | 每秒处理包数 | 148Mpps（64字节包） |
+| 延迟 | 数据包经过设备的时间 | < 10μs |
+| 并发流数 | 同时维护的流表数量 | 千万级 |
+
+## 典型应用场景
+
+- **运营商网络**：移动核心网、宽带接入网
+- **数据中心**：流量镜像、安全防护
+- **企业网络**：上网行为管理、流量监控
+- **安全领域**：入侵检测、DDoS 防护
+
+## 小结
+
+汇聚分流设备是现代通信网络的重要基础设施。掌握其核心技术，不仅能提升系统编程能力，更能深入理解网络世界的运行机制。在后续文章中，我们将继续深入探讨更多具体实现细节。
+`,
+  },
+  {
+    slug: "tcp-ip-protocol-stack-practice",
+    title: "TCP/IP 协议栈深度剖析与实践",
+    description:
+      "从底层原理到实现细节，全面拆解 TCP/IP 协议栈。结合通信设备开发实践，深入理解三次握手、拥塞控制、滑动窗口等核心机制。",
+    date: "2026-04-28",
+    readTime: 28,
+    tags: ["TCP/IP", "网络协议", "协议栈"],
+    category: "网络通信",
+    content: `## 前言
+
+TCP/IP 协议栈是互联网的基石。作为通信设备开发者，深入理解协议栈原理不仅是基本功，更是性能调优和问题排查的关键。
+
+## TCP/IP 模型回顾
+
+\`\`\`
+┌─────────────────────────────────┐
+│  应用层  HTTP FTP DNS Telnet...  │
+├─────────────────────────────────┤
+│  传输层  TCP  UDP                │
+├─────────────────────────────────┤
+│  网络层  IP  ICMP  ARP           │
+├─────────────────────────────────┤
+│  链路层  Ethernet  PPP ...        │
+└─────────────────────────────────┘
+\`\`\`
+
+## TCP 核心机制深度解析
+
+### 三次握手
+
+\`\`\`
+客户端                           服务端
+   │          SYN (seq=x)          │
+   ├──────────────────────────────▶│
+   │                               │
+   │     SYN+ACK (seq=y, ack=x+1)  │
+   │◀──────────────────────────────┤
+   │                               │
+   │     ACK (ack=y+1)             │
+   ├──────────────────────────────▶│
+   │                               │
+\`\`\`
+
+**为什么是三次？** 因为要确认双方的发送和接收能力都正常：
+- 第一次：客户端发送 → 服务端知道客户端能发
+- 第二次：服务端回 → 客户端知道服务端能收能发
+- 第三次：客户端回 → 服务端知道客户端能收
+
+### 四次挥手
+
+\`\`\`
+客户端                           服务端
+   │          FIN (seq=u)          │
+   ├──────────────────────────────▶│
+   │         ACK (ack=u+1)         │
+   │◀──────────────────────────────┤
+   │                               │
+   │          FIN (seq=w)          │
+   │◀──────────────────────────────┤
+   │                               │
+   │         ACK (ack=w+1)         │
+   ├──────────────────────────────▶│
+   │                               │
+\`\`\`
+
+### 滑动窗口
+
+滑动窗口是 TCP 实现流量控制和可靠传输的核心机制：
+
+\`\`\`
+发送缓冲区：
+┌───────────────────────────────────────┐
+│ 已发送  │ 已发送  │      可发送       │ 不能发送
+│ 已确认  │ 未确认  │                    │
+└───────────────────────────────────────┘
+         ↑         ↑                    ↑
+        SND.UNA  SND.NXT          SND.UNA+SND.WND
+\`\`\`
+
+### 拥塞控制
+
+TCP 拥塞控制包含四个核心算法：
+
+1. **慢启动**（Slow Start）：指数增长
+2. **拥塞避免**（Congestion Avoidance）：线性增长
+3. **快重传**（Fast Retransmit）：收到3个重复ACK立即重传
+4. **快恢复**（Fast Recovery）：避免慢启动导致的骤降
+
+\`\`\`
+cwnd
+  │    慢启动           拥塞避免
+  │    /                /
+  │   /                /
+  │  /                /
+  │ /                /
+  │/________________/
+  │        ssthresh
+  └──────────────────── 时间
+\`\`\`
+
+## UDP 协议
+
+UDP 虽然简单，但在很多场景下不可或缺：
+
+| 特性 | TCP | UDP |
+|------|-----|-----|
+| 连接 | 面向连接 | 无连接 |
+| 可靠性 | 可靠 | 不可靠 |
+| 顺序 | 保证顺序 | 不保证 |
+| 流量控制 | 有 | 无 |
+| 拥塞控制 | 有 | 无 |
+| 头部开销 | 20-60 字节 | 8 字节 |
+| 适用场景 | 文件传输、Web | 实时音视频、游戏 |
+
+## 在通信设备中的实践
+
+### 协议解析加速
+
+在高性能网络设备中，协议解析通常用有限状态机（FSM）实现：
+
+\`\`\`c
+enum parse_state {
+    PARSE_ETH,
+    PARSE_IPV4,
+    PARSE_IPV6,
+    PARSE_TCP,
+    PARSE_UDP,
+    PARSE_PAYLOAD,
+    PARSE_DONE,
+    PARSE_ERROR
+};
+
+int parse_packet(struct packet *pkt) {
+    enum parse_state state = PARSE_ETH;
+    uint8_t *ptr = pkt->data;
+    int len = pkt->len;
+    
+    while (state != PARSE_DONE && state != PARSE_ERROR) {
+        switch (state) {
+        case PARSE_ETH:
+            state = parse_eth_hdr(&ptr, &len, pkt);
+            break;
+        case PARSE_IPV4:
+            state = parse_ipv4_hdr(&ptr, &len, pkt);
+            break;
+        // ...更多协议
+        }
+    }
+    return state == PARSE_DONE ? 0 : -1;
+}
+\`\`\`
+
+### TCP 状态跟踪
+
+在汇聚分流设备中，经常需要跟踪 TCP 连接状态来做深度包检测（DPI）。
+
+## 常见问题排查
+
+### 连接建立失败
+- 检查 SYN 包是否到达
+- 确认防火墙规则
+- 查看 backlog 是否满
+
+### 性能瓶颈
+- 滑动窗口是否太小
+- 是否有丢包导致重传
+- 拥塞控制算法是否适配
+
+### 连接异常断开
+- 抓包看是否有 RST
+- 检查 keepalive 配置
+- 查看是否超时
+
+## 小结
+
+TCP/IP 协议栈博大精深。只有深入理解每一个细节，才能在通信设备开发中游刃有余。在实际工作中，建议多抓包、多分析，将理论与实践结合起来。
+`,
+  },
+  {
+    slug: "high-performance-packet-processing",
+    title: "高性能数据包处理：从内核到DPDK",
+    description:
+      "从传统的内核协议栈到 DPDK 用户态驱动，探索高性能数据包处理的演进之路。结合通信设备开发经验，分享性能调优的实用技巧。",
+    date: "2026-03-20",
+    readTime: 22,
+    tags: ["DPDK", "性能优化", "数据包处理", "C语言"],
+    category: "网络通信",
+    content: `## 为什么需要高性能数据包处理
+
+随着网络带宽从 1G 发展到 10G、40G 甚至 100G，传统的内核协议栈已经难以满足线速处理的需求。
+
+## 传统内核处理的瓶颈
+
+\`\`\`
+用户空间                    内核空间
+    │                          │
+    │   recv()/send()         │   系统调用开销
+    │◀───────────────────────▶│
+    │                          │
+    │                          │   协议栈处理
+    │                          │   （TCP/IP 栈）
+    │                          │
+    │                          │   网卡驱动
+    │                          │◀────── 网卡中断
+    └──────────────────────────┘
+\`\`\`
+
+### 主要开销
+
+1. **系统调用**：用户态到内核态切换
+2. **中断**：每个数据包触发一次中断
+3. **内存拷贝**：内核态到用户态的拷贝
+4. **协议栈**：通用协议栈的额外开销
+
+## DPDK 核心思想
+
+DPDK 通过以下技术实现高性能：
+
+### 1. 用户态驱动
+
+绕过内核，直接在用户态操作网卡寄存器：
+
+\`\`\`
+用户空间
+    │
+    ├── 应用程序
+    │      │
+    │      ▼
+    └── DPDK PMD（Poll Mode Driver）
+           │
+           ▼
+        网卡硬件
+\`\`\`
+
+### 2. 轮询模式
+
+用轮询替代中断，避免中断上下文切换开销：
+
+\`\`\`c
+// 传统中断方式：等待中断触发
+// DPDK 轮询方式：不断查询
+while (1) {
+    uint16_t nb_rx = rte_eth_rx_burst(port, q, bufs, BURST_SIZE);
+    if (nb_rx > 0) {
+        process_burst(bufs, nb_rx);
+    }
+}
+\`\`\`
+
+### 3. 大页内存
+
+使用 HugePage 减少 TLB miss：
+
+| 页面大小 | TLB 覆盖范围（512项） |
+|----------|----------------------|
+| 4KB      | 2MB                  |
+| 2MB      | 1GB                  |
+| 1GB      | 512GB                |
+
+### 4. 内存池
+
+预分配内存池，避免频繁的 malloc/free：
+
+\`\`\`c
+// 创建内存池
+struct rte_mempool *mbuf_pool = rte_pktmbuf_pool_create(
+    "mbuf_pool",
+    NB_MBUF,          // 元素数量
+    MEMPOOL_CACHE_SIZE, // 每核缓存大小
+    0,
+    RTE_MBUF_DEFAULT_BUF_SIZE,
+    rte_socket_id()
+);
+
+// 从池中分配
+struct rte_mbuf *m = rte_pktmbuf_alloc(mbuf_pool);
+
+// 归还到池中
+rte_pktmbuf_free(m);
+\`\`\`
+
+## 性能优化技巧
+
+### 1. CPU 亲和性
+
+将收发包线程绑定到特定 CPU 核，避免调度开销：
+
+\`\`\`c
+// 设置 CPU 亲和性
+cpu_set_t cpuset;
+CPU_ZERO(&cpuset);
+CPU_SET(core_id, &cpuset);
+pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+\`\`\`
+
+### 2. 批量处理
+
+尽可能批量收发包，摊平函数调用开销：
+
+\`\`\`c
+// 推荐：批量处理
+#define BURST_SIZE 32
+
+while (1) {
+    struct rte_mbuf *bufs[BURST_SIZE];
+    uint16_t nb_rx = rte_eth_rx_burst(port, q, bufs, BURST_SIZE);
+    
+    // 批量处理
+    process_packets(bufs, nb_rx);
+    
+    // 批量发送
+    rte_eth_tx_burst(out_port, q, bufs, nb_rx);
+}
+\`\`\`
+
+### 3. 无锁队列
+
+使用 DPDK 的无锁环形队列（rte_ring）进行核间通信：
+
+\`\`\`c
+// 创建无锁环形队列
+struct rte_ring *ring = rte_ring_create(
+    "packet_ring",
+    RING_SIZE,
+    rte_socket_id(),
+    RING_F_SP_ENQ | RING_F_SC_DEQ  // 单生产者单消费者
+);
+
+// 入队
+rte_ring_enqueue_burst(ring, (void **)bufs, nb_rx, NULL);
+
+// 出队
+uint16_t nb_deq = rte_ring_dequeue_burst(ring, (void **)bufs, BURST_SIZE, NULL);
+\`\`\`
+
+### 4. Cache 优化
+
+- 合理布局数据结构，减少 cache miss
+- 避免伪共享（False Sharing）：每个核的数据放不同 cache line
+
+\`\`\`c
+// 避免伪共享：每个统计变量占一个 cache line
+struct per_core_stats {
+    uint64_t rx_packets;
+    uint64_t tx_packets;
+    uint64_t rx_bytes;
+    uint64_t tx_bytes;
+    char padding[64 - 4 * sizeof(uint64_t)]; // 填充到64字节
+} __rte_cache_aligned;
+\`\`\`
+
+## 典型架构
+
+### 多核流水线架构
+
+\`\`\`
+┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐
+│ RX  │───▶│ 解析 │───▶│ 处理 │───▶│ TX  │
+│ 核  │    │ 核  │    │ 核  │    │ 核  │
+└─────┘    └─────┘    └─────┘    └─────┘
+             无锁队列      无锁队列
+\`\`\`
+
+### Run-to-Completion 架构
+
+每个核处理完整的数据包生命周期：
+
+\`\`\`
+  核0: RX → 解析 → 处理 → TX
+  核1: RX → 解析 → 处理 → TX
+  核2: RX → 解析 → 处理 → TX
+  ...
+\`\`\`
+
+## 性能测试方法
+
+### 关键指标
+
+- **吞吐量**（Throughput）：bps 或 pps
+- **延迟**（Latency）：数据包处理时间
+- **丢包率**（Drop Rate）：过载时的丢包比例
+- **CPU 利用率**（CPU Utilization）
+
+### 常用工具
+
+- **TRex**：DPDK 性能测试工具
+- **pktgen-dpdk**：DPDK 官方发包工具
+- **iperf**：TCP/UDP 性能测试
+- **tcpdump**：抓包分析
+
+## 小结
+
+高性能数据包处理是通信设备开发的核心技能。从理解内核协议栈的瓶颈，到掌握 DPDK 的优化技巧，需要持续的学习和实践。希望这篇文章能为你打开一扇新的大门。
+`,
+  },
+  {
     slug: "linux-kernel-introduction",
     title: "Linux 内核初探：从用户空间到内核空间",
     description:
