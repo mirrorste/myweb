@@ -5,9 +5,7 @@ import { profile } from "@/data/profile";
 
 const terminalLines = [
   { prompt: "$ whoami", output: "STEMirror" },
-  { prompt: "$ cat /etc/os-release", output: "Linux 6.1.0-amd64 x86_64" },
-  { prompt: "$ gcc --version", output: "gcc (GCC) 12.2.0" },
-  { prompt: "$ node --version", output: "v20.10.0" },
+  { prompt: "$ location", output: "Earth, Solar System, Orion Arm, Milky Way" },
   { prompt: "$ echo $ROLE", output: "全栈开发工程师 & 系统编程爱好者" },
   { prompt: "$ ls ~/projects/", output: "web-apps  kernel-hacks  tools  ..." },
   { prompt: "$ status", output: "Coding with passion ✨" },
