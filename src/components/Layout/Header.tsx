@@ -48,10 +48,12 @@ export default function Header() {
       <div className="container">
       <div className="flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-lg bg-gh-green/20 border border-gh-green/30 flex items-center justify-center group-hover:bg-gh-green/30 transition-colors">
-            <Code2 className="w-5 h-5 text-gh-green" />
-          </div>
-          <span className="font-mono font-bold text-lg text-gh-text">
+          <img 
+            src="/logo.svg" 
+            alt="STEMirror Logo" 
+            className="w-10 h-10 group-hover:scale-105 transition-transform"
+          />
+          <span className="font-mono font-bold text-lg text-gh-text hidden sm:inline">
             {"<STEMirror/>"}
           </span>
         </Link>

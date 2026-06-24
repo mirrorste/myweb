@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- 渐变背景 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    
+    <!-- 字母渐变色 -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3fb950"/>
+      <stop offset="50%" style="stop-color:#58a6ff"/>
+      <stop offset="100%" style="stop-color:#a371f7"/>
+    </linearGradient>
+    
+    <!-- 发光效果 -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 阴影 -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#3fb950" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 背景圆角矩形 -->
+  <rect x="4" y="4" width="112" height="112" rx="16" ry="16" fill="url(#bgGradient)" stroke="url(#textGradient)" stroke-width="2"/>
+  
+  <!-- 终端提示符元素 -->
+  <g filter="url(#glow)">
+    <!-- 光标闪烁条 -->
+    <rect x="20" y="95" width="8" height="14" rx="1" fill="#3fb950" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- STE 字母组合 -->
+  <g filter="url(#shadow)" font-family="'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace" font-weight="700" font-size="42">
+    <!-- S - 几何化设计，带有终端风格 -->
+    <text x="22" y="52" fill="url(#textGradient)">S</text>
+    
+    <!-- T - 带竖线装饰 -->
+    <text x="54" y="52" fill="url(#textGradient)">T</text>
+    
+    <!-- E - 带终端方块元素 -->
+    <text x="86" y="52" fill="url(#textGradient)">E</text>
+  </g>
+  
+  <!-- 装饰性元素：代码连接线 -->
+  <g stroke="url(#textGradient)" stroke-width="1.5" fill="none" opacity="0.6">
+    <!-- S 和 T 之间的连接 -->
+    <path d="M 50 30 Q 54 26 58 30" stroke-dasharray="2,2"/>
+    <!-- T 和 E 之间的连接 -->
+    <path d="M 82 30 Q 86 26 90 30" stroke-dasharray="2,2"/>
+  </g>
+  
+  <!-- 装饰性方括号 -->
+  <g fill="#3fb950" opacity="0.4">
+    <rect x="18" y="22" width="3" height="3"/>
+    <rect x="18" y="28" width="3" height="3"/>
+    <rect x="98" y="22" width="3" height="3"/>
+    <rect x="98" y="28" width="3" height="3"/>
+  </g>
+  
+  <!-- 底部版本号/标签 -->
+  <g font-family="'JetBrains Mono', monospace" font-size="8" fill="#8b949e">
+    <text x="50" y="75">v1.0</text>
+  </g>
+</svg>
