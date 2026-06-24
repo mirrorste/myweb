@@ -1,55 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0d1117"/>
-      <stop offset="100%" stop-color="#161b22"/>
-    </linearGradient>
-    <linearGradient id="txtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#3fb950"/>
       <stop offset="50%" stop-color="#58a6ff"/>
       <stop offset="100%" stop-color="#a371f7"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
   </defs>
   
   <!-- 背景 -->
-  <rect x="4" y="4" width="112" height="112" rx="16" fill="url(#bgGrad)" stroke="url(#txtGrad)" stroke-width="2"/>
+  <rect x="4" y="4" width="112" height="112" rx="16" fill="#0d1117" stroke="#3fb950" stroke-width="2"/>
   
-  <!-- S 字母 - 使用路径绘制 -->
-  <g filter="url(#glow)">
-    <path d="M 38 30 C 28 30 22 36 22 44 C 22 52 28 56 38 56 C 46 56 52 52 52 46 C 52 40 46 38 38 38 L 30 38 L 30 46 L 38 46 C 42 46 44 48 44 50 C 44 54 40 56 34 56 C 28 56 26 52 26 48 C 26 42 30 38 38 38" 
-          fill="none" stroke="url(#txtGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
+  <!-- S 字母 -->
+  <path d="M 38 32 C 26 32 22 40 22 46 C 22 54 28 58 38 58 C 48 58 54 52 54 44 C 54 36 46 34 38 34 L 32 34 L 32 44 L 38 44 C 42 44 44 48 44 50 C 44 56 40 58 34 58 C 26 58 24 54 24 48 C 24 40 30 32 38 32 Z" 
+        fill="none" stroke="url(#grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   
   <!-- T 字母 -->
-  <g filter="url(#glow)">
-    <path d="M 58 30 L 90 30 M 74 30 L 74 56" 
-          fill="none" stroke="url(#txtGrad)" stroke-width="4" stroke-linecap="round"/>
-  </g>
+  <path d="M 58 32 L 90 32 M 74 32 L 74 58" 
+        fill="none" stroke="url(#grad)" stroke-width="4" stroke-linecap="round"/>
   
   <!-- E 字母 -->
-  <g filter="url(#glow)">
-    <path d="M 92 30 L 108 30 M 92 43 L 104 43 M 92 56 L 108 56 M 92 30 L 92 56" 
-          fill="none" stroke="url(#txtGrad)" stroke-width="4" stroke-linecap="round"/>
-  </g>
-  
-  <!-- 光标 -->
-  <rect x="22" y="66" width="8" height="14" rx="1" fill="#3fb950" opacity="0.8">
-    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/>
-  </rect>
+  <path d="M 92 32 L 108 32 M 92 45 L 104 45 M 92 58 L 108 58 M 92 32 L 92 58" 
+        fill="none" stroke="url(#grad)" stroke-width="4" stroke-linecap="round"/>
   
   <!-- 装饰点 -->
-  <circle cx="20" cy="22" r="2" fill="#3fb950" opacity="0.4"/>
-  <circle cx="20" cy="28" r="2" fill="#3fb950" opacity="0.4"/>
-  <circle cx="100" cy="22" r="2" fill="#a371f7" opacity="0.4"/>
-  <circle cx="100" cy="28" r="2" fill="#a371f7" opacity="0.4"/>
-  
-  <!-- 版本号 -->
-  <text x="52" y="92" fill="#8b949e" font-family="monospace" font-size="8">v1.0</text>
+  <circle cx="18" cy="22" r="2" fill="#3fb950"/>
+  <circle cx="102" cy="22" r="2" fill="#a371f7"/>
 </svg>
