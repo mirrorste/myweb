@@ -6,9 +6,8 @@ import { profile } from "@/data/profile";
 const terminalLines = [
   { prompt: "$ whoami", output: "STEMirror" },
   { prompt: "$ location", output: "Earth, Solar System, Orion Arm, Milky Way" },
-  { prompt: "$ echo $ROLE", output: "通信设备软件开发工程师" },
-  { prompt: "$ ip link show", output: "eth0: 100Gbps UP  txqueuelen 10000" },
-  { prompt: "$ ls ~/projects/", output: "agg-div  dpdk-app  protocol-stack  ..." },
+  { prompt: "$ echo $ROLE", output: "全栈开发工程师 & 系统编程爱好者" },
+  { prompt: "$ ls ~/projects/", output: "web-apps  kernel-hacks  tools  ..." },
   { prompt: "$ status", output: "Coding with passion ✨" },
 ];
 
