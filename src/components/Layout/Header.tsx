@@ -49,7 +49,7 @@ export default function Header() {
       <div className="flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-3 group">
           <img 
-            src="/logo.svg" 
+            src="/myweb/logo.svg" 
             alt="STEMirror Logo" 
             className="w-10 h-10 group-hover:scale-105 transition-transform"
           />
