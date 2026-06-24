@@ -94,7 +94,7 @@ export default function TerminalHero() {
                 <ChevronRight className="w-4 h-4" />
               </a>
               <a
-                href="/about"
+                href="#/about"
                 className="gh-btn"
               >
                 了解更多

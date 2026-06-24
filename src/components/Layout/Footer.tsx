@@ -22,7 +22,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li>
               <a
-                href="/"
+                href="#/"
                 className="text-gh-text-muted hover:text-gh-green transition-colors"
               >
                 首页
@@ -30,7 +30,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/archive"
+                href="#/archive"
                 className="text-gh-text-muted hover:text-gh-green transition-colors"
               >
                 归档
@@ -38,7 +38,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/about"
+                href="#/about"
                 className="text-gh-text-muted hover:text-gh-green transition-colors"
               >
                 关于
