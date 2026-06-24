@@ -144,9 +144,9 @@ export default function TerminalHero() {
                 </div>
               </div>
 
-              <div className="p-6 font-mono text-sm h-80 overflow-hidden">
+              <div className="p-6 font-mono text-sm h-96 overflow-hidden">
                 {terminalLines.slice(0, visibleLines).map((line, i) => (
-                  <div key={i} className="mb-3">
+                  <div key={i} className="mb-2">
                     <div className="text-gh-green flex items-center gap-2">
                       <span>$</span>
                       <span>{line.prompt.replace("$ ", "")}</span>
@@ -156,7 +156,7 @@ export default function TerminalHero() {
                 ))}
 
                 {lineIndex < terminalLines.length && (
-                  <div className="mb-3">
+                  <div className="mb-2">
                     <div className="text-gh-green flex items-center gap-2">
                       <span>$</span>
                       <span>
