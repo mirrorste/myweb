@@ -22,9 +22,14 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
           const isActive = activeId === item.id;
           return (
             <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                className={`block py-2 px-4 -ml-px border-l-2 transition-all duration-200 ${
+              <button
+                onClick={() => {
+                  const el = document.getElementById(item.id);
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                }}
+                className={`block py-2 px-4 -ml-px border-l-2 transition-all duration-200 w-full text-left ${
                   item.level === 3 ? "pl-6" : ""
                 } ${
                   isActive
@@ -33,7 +38,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
                 }`}
               >
                 {item.text}
-              </a>
+              </button>
             </li>
           );
         })}

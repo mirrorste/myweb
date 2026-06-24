@@ -52,17 +52,12 @@ export default function BlogDetailPage() {
       return { id, text, level };
     });
 
-  const addHeadingIds = (content: string): string => {
-    return content.replace(/^(##{1,3})\s(.+)$/gm, (match, hashes, text) => {
-      const id = text
-        .toLowerCase()
-        .replace(/[^\w\u4e00-\u9fa5]+/g, "-")
-        .replace(/^-|-$/g, "");
-      return `${hashes} <span id="${id}">${text}</span>`;
-    });
+  const getHeadingId = (text: string): string => {
+    return text
+      .toLowerCase()
+      .replace(/[^\w\u4e00-\u9fa5]+/g, "-")
+      .replace(/^-|-$/g, "");
   };
-
-  const contentWithIds = addHeadingIds(post.content);
 
   return (
     <div className="py-12">
@@ -152,31 +147,43 @@ export default function BlogDetailPage() {
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    h1: ({ children, ...props }) => (
-                      <h1
-                        className="text-3xl font-bold mt-12 mb-6 text-gh-text font-mono scroll-mt-24"
-                        {...props}
-                      >
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children, ...props }) => (
-                      <h2
-                        className="text-2xl font-bold mt-10 mb-4 text-gh-text font-mono scroll-mt-24 flex items-center gap-3"
-                        {...props}
-                      >
-                        <span className="text-gh-green">#</span>
-                        {children}
-                      </h2>
-                    ),
-                    h3: ({ children, ...props }) => (
-                      <h3
-                        className="text-xl font-semibold mt-8 mb-3 text-gh-text font-mono scroll-mt-24"
-                        {...props}
-                      >
-                        {children}
-                      </h3>
-                    ),
+                    h1: ({ children, ...props }) => {
+                      const id = getHeadingId(String(children));
+                      return (
+                        <h1
+                          id={id}
+                          className="text-3xl font-bold mt-12 mb-6 text-gh-text font-mono scroll-mt-24"
+                          {...props}
+                        >
+                          {children}
+                        </h1>
+                      );
+                    },
+                    h2: ({ children, ...props }) => {
+                      const id = getHeadingId(String(children));
+                      return (
+                        <h2
+                          id={id}
+                          className="text-2xl font-bold mt-10 mb-4 text-gh-text font-mono scroll-mt-24 flex items-center gap-3"
+                          {...props}
+                        >
+                          <span className="text-gh-green">#</span>
+                          {children}
+                        </h2>
+                      );
+                    },
+                    h3: ({ children, ...props }) => {
+                      const id = getHeadingId(String(children));
+                      return (
+                        <h3
+                          id={id}
+                          className="text-xl font-semibold mt-8 mb-3 text-gh-text font-mono scroll-mt-24"
+                          {...props}
+                        >
+                          {children}
+                        </h3>
+                      );
+                    },
                     p: ({ children, ...props }) => (
                       <p
                         className="text-gh-text leading-7 mb-4"
@@ -297,7 +304,7 @@ export default function BlogDetailPage() {
                     ),
                   }}
                 >
-                  {contentWithIds}
+                  {post.content}
                 </ReactMarkdown>
               </div>
             </motion.div>
