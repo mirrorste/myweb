@@ -1,74 +1,55 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
   <defs>
-    <!-- 渐变背景 -->
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0d1117"/>
-      <stop offset="100%" style="stop-color:#161b22"/>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
     </linearGradient>
-    
-    <!-- 字母渐变色 -->
-    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3fb950"/>
-      <stop offset="50%" style="stop-color:#58a6ff"/>
-      <stop offset="100%" style="stop-color:#a371f7"/>
+    <linearGradient id="txtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3fb950"/>
+      <stop offset="50%" stop-color="#58a6ff"/>
+      <stop offset="100%" stop-color="#a371f7"/>
     </linearGradient>
-    
-    <!-- 发光效果 -->
     <filter id="glow">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    
-    <!-- 阴影 -->
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#3fb950" flood-opacity="0.3"/>
-    </filter>
   </defs>
   
-  <!-- 背景圆角矩形 -->
-  <rect x="4" y="4" width="112" height="112" rx="16" ry="16" fill="url(#bgGradient)" stroke="url(#textGradient)" stroke-width="2"/>
+  <!-- 背景 -->
+  <rect x="4" y="4" width="112" height="112" rx="16" fill="url(#bgGrad)" stroke="url(#txtGrad)" stroke-width="2"/>
   
-  <!-- 终端提示符元素 -->
+  <!-- S 字母 - 使用路径绘制 -->
   <g filter="url(#glow)">
-    <!-- 光标闪烁条 -->
-    <rect x="20" y="95" width="8" height="14" rx="1" fill="#3fb950" opacity="0.8">
-      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/>
-    </rect>
+    <path d="M 38 30 C 28 30 22 36 22 44 C 22 52 28 56 38 56 C 46 56 52 52 52 46 C 52 40 46 38 38 38 L 30 38 L 30 46 L 38 46 C 42 46 44 48 44 50 C 44 54 40 56 34 56 C 28 56 26 52 26 48 C 26 42 30 38 38 38" 
+          fill="none" stroke="url(#txtGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   
-  <!-- STE 字母组合 -->
-  <g filter="url(#shadow)" font-family="'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace" font-weight="700" font-size="42">
-    <!-- S - 几何化设计，带有终端风格 -->
-    <text x="22" y="52" fill="url(#textGradient)">S</text>
-    
-    <!-- T - 带竖线装饰 -->
-    <text x="54" y="52" fill="url(#textGradient)">T</text>
-    
-    <!-- E - 带终端方块元素 -->
-    <text x="86" y="52" fill="url(#textGradient)">E</text>
+  <!-- T 字母 -->
+  <g filter="url(#glow)">
+    <path d="M 58 30 L 90 30 M 74 30 L 74 56" 
+          fill="none" stroke="url(#txtGrad)" stroke-width="4" stroke-linecap="round"/>
   </g>
   
-  <!-- 装饰性元素：代码连接线 -->
-  <g stroke="url(#textGradient)" stroke-width="1.5" fill="none" opacity="0.6">
-    <!-- S 和 T 之间的连接 -->
-    <path d="M 50 30 Q 54 26 58 30" stroke-dasharray="2,2"/>
-    <!-- T 和 E 之间的连接 -->
-    <path d="M 82 30 Q 86 26 90 30" stroke-dasharray="2,2"/>
+  <!-- E 字母 -->
+  <g filter="url(#glow)">
+    <path d="M 92 30 L 108 30 M 92 43 L 104 43 M 92 56 L 108 56 M 92 30 L 92 56" 
+          fill="none" stroke="url(#txtGrad)" stroke-width="4" stroke-linecap="round"/>
   </g>
   
-  <!-- 装饰性方括号 -->
-  <g fill="#3fb950" opacity="0.4">
-    <rect x="18" y="22" width="3" height="3"/>
-    <rect x="18" y="28" width="3" height="3"/>
-    <rect x="98" y="22" width="3" height="3"/>
-    <rect x="98" y="28" width="3" height="3"/>
-  </g>
+  <!-- 光标 -->
+  <rect x="22" y="66" width="8" height="14" rx="1" fill="#3fb950" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/>
+  </rect>
   
-  <!-- 底部版本号/标签 -->
-  <g font-family="'JetBrains Mono', monospace" font-size="8" fill="#8b949e">
-    <text x="50" y="75">v1.0</text>
-  </g>
+  <!-- 装饰点 -->
+  <circle cx="20" cy="22" r="2" fill="#3fb950" opacity="0.4"/>
+  <circle cx="20" cy="28" r="2" fill="#3fb950" opacity="0.4"/>
+  <circle cx="100" cy="22" r="2" fill="#a371f7" opacity="0.4"/>
+  <circle cx="100" cy="28" r="2" fill="#a371f7" opacity="0.4"/>
+  
+  <!-- 版本号 -->
+  <text x="52" y="92" fill="#8b949e" font-family="monospace" font-size="8">v1.0</text>
 </svg>
