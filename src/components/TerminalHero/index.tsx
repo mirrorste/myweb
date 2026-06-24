@@ -86,13 +86,18 @@ export default function TerminalHero() {
               transition={{ delay: 0.7, duration: 0.5 }}
               className="flex flex-wrap gap-4"
             >
-              <a
-                href="#/#posts"
+              <button
+                onClick={() => {
+                  const postsEl = document.getElementById("posts");
+                  if (postsEl) {
+                    postsEl.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
                 className="gh-btn-primary"
               >
                 浏览文章
                 <ChevronRight className="w-4 h-4" />
-              </a>
+              </button>
               <a
                 href="#/about"
                 className="gh-btn"
