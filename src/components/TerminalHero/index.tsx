@@ -87,7 +87,7 @@ export default function TerminalHero() {
               className="flex flex-wrap gap-4"
             >
               <a
-                href="#posts"
+                href="#/#posts"
                 className="gh-btn-primary"
               >
                 浏览文章
